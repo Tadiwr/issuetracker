@@ -19,5 +19,13 @@ public class HelloWorldController {
         return "Hello world admin";
     }
     
+    @GetMapping("/tester")
+    public String helloWorldTester() {
+        return "Hello world tester";
+    }
     
+    @GetMapping("/dev")
+    public String helloWorldDev() {
+        return "Hello world dev";
+    }
 }
