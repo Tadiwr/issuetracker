@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
@@ -17,6 +16,8 @@ import io.jsonwebtoken.Jwts;
 
 @Service
 public class JwtProvider {
+
+    private Long milliSecondsInOneSecond = 1000L;
 
     /** Generate a token that never expires */
     public String generateToken(String sub, Map<String, Object> claims, SecretKey key) {
@@ -125,5 +126,30 @@ public class JwtProvider {
 
         }
     }
+
+    /* Returns the number of milliseconds in n number of seconds */
+    public Long secondsToMilli(int seconds) {
+        return milliSecondsInOneSecond * seconds;
+    }
+
+    /* Returns the number of milliseconds in n number of minutes */
+    public Long minutesToMills(int minutes) {
+        return secondsToMilli(60) * minutes;
+    }
+
+    /* Returns the number of milliseconds in n number of hours */
+    public Long hoursToMillis(int hours) {
+        return minutesToMills(60) * hours;
+    }
+
+    /* Returns the number of milliseconds in n number of days */
+    public Long daysToMilli(int days) {
+        return hoursToMillis(24) * days;
+    }
+
+    /* Returns the number of milliseconds in n number of years */
+    public Long yearsToMillis(int years) {
+        return daysToMilli(365) * years;
+    } 
 
 }
