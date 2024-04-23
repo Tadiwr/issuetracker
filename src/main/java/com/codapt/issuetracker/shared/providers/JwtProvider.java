@@ -17,9 +17,6 @@ import io.jsonwebtoken.Jwts;
 
 @Service
 public class JwtProvider {
-    
-    @Value("${jwt.secret.key}")
-    private String secretKeyStr;
 
     /** Generate a token that never expires */
     public String generateToken(String sub, Map<String, Object> claims, SecretKey key) {
