@@ -19,9 +19,20 @@ public class UserService {
 
     /** Finds a user by taking in their email and plain text password */
     public Optional<User> findByEmailAndPassword(String email, String password) {
-        String hashedPassword = hashPassword(password);
+        Optional<User> user = userRepo.findByEmail(email);
 
-        return userRepo.findByEmailAndHashedPassword(email, hashedPassword);
+        if (user.isPresent()) {
+            System.out.println("THERE IS A USER");
+            String dbPasswd = user.get().getHashedPassword();
+        
+            if(HashProvider.checkHash(password, dbPasswd)) {
+                System.out.println("Yes Correct password");
+                User realUser = user.get();
+                return Optional.ofNullable(realUser);
+            }
+        }
+
+        return Optional.empty();
     }
 
     /** Saves a user with the password already hashed */
@@ -29,17 +40,9 @@ public class UserService {
         return userRepo.save(user);
     }
 
-    /** Takes in a user object with a plaintext password,
-     * hashes it and then saves it
-     */
-    public User hashPasswordAndSave(User user) {
-        user.setHashedPassword(hashPassword(user.getHashedPassword()));
-        return save(user);
-    }
-
-    private String hashPassword(String plain) {
-        String hashedPassword = HashProvider.hashString(plain);
-        return hashedPassword;
+    public User hashPsswdAndSave(User user) {
+        user.setHashedPassword(HashProvider.hash(user.getHashedPassword()));
+        return userRepo.save(user);
     }
 
 }

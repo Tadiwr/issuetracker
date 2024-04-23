@@ -17,11 +17,9 @@ public class CreateUserRequest {
     public User toUser() {
 
         User user = new User();
-        String hashedPassword = HashProvider.hashString(this.getPassword());
-
         user.setName(this.getName());
         user.setEmail(this.getEmail());
-        user.setHashedPassword(hashedPassword);
+        user.setHashedPassword(password);
         user.setRole(this.getRole());
 
         return user;

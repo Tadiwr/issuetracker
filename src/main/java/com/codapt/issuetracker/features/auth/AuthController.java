@@ -3,6 +3,7 @@ package com.codapt.issuetracker.features.auth;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.codapt.issuetracker.shared.exceptions.UserNotFoundException;
 import com.codapt.issuetracker.shared.types.AuthRepsonse;
 import com.codapt.issuetracker.shared.types.AuthRequest;
 import com.codapt.issuetracker.shared.types.CreateUserRequest;
@@ -21,9 +22,14 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthRepsonse> login(@RequestBody AuthRequest req) {
-        AuthRepsonse res =  authService.authenticate(req);
 
-        return ResponseEntity.ok(res);
+        try {
+            AuthRepsonse res = authService.authenticate(req);
+            return ResponseEntity.ok(res);
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
     @PostMapping("/create/account")
