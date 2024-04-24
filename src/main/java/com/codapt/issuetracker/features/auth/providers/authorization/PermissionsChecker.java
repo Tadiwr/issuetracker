@@ -7,7 +7,36 @@ import java.util.Map;
 
 import com.codapt.issuetracker.shared.enums.UserRole;
 
-public class PermissionsMapper {
+public class PermissionsChecker {
+
+    private static PermissionsMapper mapper = new PermissionsMapper();
+
+    public static boolean check(UserRole role, String path) {
+        List<String> paths = mapper.getRolePaths(role);
+
+        for(String p : paths) {
+            String basePath = p;
+            
+            if (basePath.endsWith("/**")) {
+                // Removing wild card matcher
+                basePath = basePath.substring(0, basePath.length() - 3);
+            }
+
+            System.out.println("&" + basePath + "& vs &" + path + "&" );
+
+            if(path.startsWith(basePath)) {
+                return true;
+            }
+            
+        }
+
+        return false;
+    }
+
+
+}
+
+class PermissionsMapper {
     
     private Map<UserRole, List<String>> map;
 
@@ -22,7 +51,10 @@ public class PermissionsMapper {
             .setMappings(UserRole.DEVELOPER, List.of("/api/dev/**"))
             .build();
     }
-    
+
+    public List<String> getRolePaths(UserRole role) {
+        return map.get(role);
+    }
 
 
 }
@@ -70,10 +102,6 @@ class PermissionsMapBuilder {
 
         map.replace(UserRole.ADMIN, combinedAdminPaths);
         map.replace(UserRole.TESTER, combinedTesterPaths);
-
-        printAllPaths(UserRole.ADMIN);
-        printAllPaths(UserRole.TESTER);
-        printAllPaths(UserRole.DEVELOPER);
 
         return map;
     }
