@@ -2,7 +2,6 @@ package com.codapt.issuetracker.shared.types;
 
 import com.codapt.issuetracker.features.users.User;
 import com.codapt.issuetracker.shared.enums.UserRole;
-import com.codapt.issuetracker.shared.providers.HashProvider;
 
 import lombok.Data;
 

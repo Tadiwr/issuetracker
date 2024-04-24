@@ -106,7 +106,7 @@ class PermissionsMapBuilder {
         return map;
     }
 
-    private void printAllPaths(UserRole role) {
+    public void printAllPaths(UserRole role) {
         System.err.println("\n\n "+ role + " ->");
 
         map.get(role).forEach(path -> {
