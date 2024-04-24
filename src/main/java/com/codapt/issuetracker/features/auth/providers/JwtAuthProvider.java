@@ -52,5 +52,9 @@ public class JwtAuthProvider implements AuthProvider {
         }
 
     }
+
+    public String getTokenSubject(String token) {
+        return jwtUtil.getSubject(token, secretKeyStr);
+    }
     
 }

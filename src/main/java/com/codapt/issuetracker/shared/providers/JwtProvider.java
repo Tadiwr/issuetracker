@@ -100,6 +100,18 @@ public class JwtProvider {
         .getPayload(); 
     }
 
+    /** Gets the subject of a key from the token using the secret key */
+    public String getSubject(String token, SecretKey key) {
+        Claims claims = getClaims(token, key);
+        return claims.getSubject(); 
+    }
+
+    /** Gets the subject of a key from the token using the secret key */
+    public String getSubject(String token, String key) {
+        Claims claims = getClaims(token, key);
+        return claims.getSubject(); 
+    }
+
     /** Verifies if a token is valid based on a token and a key */
     public boolean verify(String token, String key) {
         try {

@@ -10,4 +10,7 @@ public interface AuthProvider {
     /** Verifies a token */
     public boolean verifyToken(String token);
 
+    /** Returns the subject of a token, which is the email */
+    public String getTokenSubject(String token);
+
 }

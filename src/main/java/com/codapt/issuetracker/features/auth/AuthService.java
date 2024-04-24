@@ -59,4 +59,11 @@ public class AuthService {
         return authProvider.verifyToken(token);
     }
 
+    public Optional<User> getTokenBearer(String token) {
+        String email = authProvider.getTokenSubject(token);
+        Optional<User> userOptional = userService.findByEmail(email);
+
+        return userOptional;
+    }
+
 }

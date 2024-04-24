@@ -17,6 +17,10 @@ public class UserService {
         return userRepo.findById(id);
     }
 
+    public Optional<User> findByEmail(String email) {
+        return userRepo.findByEmail(email);
+    }
+
     /** Finds a user by taking in their email and plain text password */
     public Optional<User> findByEmailAndPassword(String email, String password) {
         Optional<User> user = userRepo.findByEmail(email);
