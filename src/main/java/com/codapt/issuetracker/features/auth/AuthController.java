@@ -10,6 +10,7 @@ import com.codapt.issuetracker.shared.types.CreateUserRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -37,6 +38,11 @@ public class AuthController {
         AuthRepsonse res = authService.createNewUser(req);
 
         return ResponseEntity.ok(res);
+    }
+
+    @DeleteMapping("/logout")
+    public void logout() {
+        
     }
         
 }

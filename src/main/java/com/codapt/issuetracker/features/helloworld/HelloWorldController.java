@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
-@RequestMapping("/hello")
+@RequestMapping("/api")
 public class HelloWorldController {
     
     @GetMapping()
@@ -13,17 +13,17 @@ public class HelloWorldController {
         return "Hello World";
     }
 
-    @GetMapping("/admin")
+    @GetMapping("admin")
     public String helloWorldAdmin() {
         return "Hello world admin";
     }
     
-    @GetMapping("/tester")
+    @GetMapping("tester")
     public String helloWorldTester() {
         return "Hello world tester";
     }
     
-    @GetMapping("/dev")
+    @GetMapping("dev")
     public String helloWorldDev() {
         return "Hello world dev";
     }
