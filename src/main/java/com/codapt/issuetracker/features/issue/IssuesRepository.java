@@ -7,8 +7,6 @@ import java.util.List;
 import com.codapt.issuetracker.features.users.User;
 import com.codapt.issuetracker.shared.enums.IssueStatus;
 
-
-
 @Repository
 public interface IssuesRepository extends CrudRepository<Issue, Long> {
 
