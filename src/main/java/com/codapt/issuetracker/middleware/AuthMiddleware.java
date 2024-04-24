@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.codapt.issuetracker.features.auth.AuthService;
+import com.codapt.issuetracker.features.auth.providers.authorization.PermissionsMapper;
 import com.codapt.issuetracker.features.users.User;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -51,7 +52,7 @@ public class AuthMiddleware implements HandlerInterceptor  {
 
     /** Takes in a user object and a path and checks if the user has permission to access the api at that path */
     private boolean checkPermissions(String path, User user) {
-        System.out.println(path);
+        new PermissionsMapper();
         return true;
     }
 
