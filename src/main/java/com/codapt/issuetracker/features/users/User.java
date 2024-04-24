@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.codapt.issuetracker.features.issue.Issue;
 import com.codapt.issuetracker.shared.enums.UserRole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,6 +30,7 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @JsonIgnore
     @Column(nullable = false)
     private String hashedPassword;
 
