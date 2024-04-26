@@ -75,7 +75,6 @@ public class AuthService {
             return Optional.empty();
         }
 
-
     }
 
     private boolean userAlreadyExists(String email)  {

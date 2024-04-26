@@ -48,7 +48,7 @@ class PermissionsMapper {
         return new PermissionsMapBuilder()
             .setMappings(UserRole.ADMIN, List.of("/api/admin/**"))
             .setMappings(UserRole.TESTER, List.of("/api/tester/**"))
-            .setMappings(UserRole.DEVELOPER, List.of("/api/dev/**"))
+            .setMappings(UserRole.DEVELOPER, List.of("/api/dev/**", "/auth/test"))
             .build();
     }
 

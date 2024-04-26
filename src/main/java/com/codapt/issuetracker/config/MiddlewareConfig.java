@@ -16,7 +16,7 @@ public class MiddlewareConfig  implements WebMvcConfigurer {
     @Autowired
     private AuthMiddleware authMiddleware;
 
-    private  List<String> authMiddlewarePatterns = List.of("/auth/logout", "/api/**");
+    private  List<String> authMiddlewarePatterns = List.of("/auth/logout", "/api/**", "/auth/test");
 
     @Override
     public void addInterceptors(@NonNull InterceptorRegistry registry) {

@@ -37,6 +37,7 @@ public class DevIssueController {
         if (desc == null) {
             return issueService.getAllIssuesDTO();
         }
+        
         return issueService.toDTO(issueService.getIssuesLike(desc));
 
     }
