@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.codapt.issuetracker.features.auth.providers.AuthProvider;
 import com.codapt.issuetracker.features.users.User;
 import com.codapt.issuetracker.features.users.UserService;
+import com.codapt.issuetracker.shared.exceptions.UserAlreadyExistsException;
 import com.codapt.issuetracker.shared.exceptions.UserNotFoundException;
 import com.codapt.issuetracker.shared.types.AuthRepsonse;
 import com.codapt.issuetracker.shared.types.AuthRequest;
@@ -45,8 +46,12 @@ public class AuthService {
 
     }
 
-    public AuthRepsonse createNewUser(CreateUserRequest request) {
+    public AuthRepsonse createNewUser(CreateUserRequest request) throws UserAlreadyExistsException {
         AuthRepsonse res = new AuthRepsonse();
+
+        if (userAlreadyExists(request.getEmail())) {
+            throw new UserAlreadyExistsException();
+        }
 
         User user = request.toUser();
         user = userService.hashPsswdAndSave(user);
@@ -60,10 +65,21 @@ public class AuthService {
     }
 
     public Optional<User> getTokenBearer(String token) {
-        String email = authProvider.getTokenSubject(token);
-        Optional<User> userOptional = userService.findByEmail(email);
 
-        return userOptional;
+        try {
+            String email = authProvider.getTokenSubject(token);
+            Optional<User> userOptional = userService.findByEmail(email);
+            return userOptional;
+            
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+
+
+    }
+
+    private boolean userAlreadyExists(String email)  {
+        return userService.findByEmail(email).isPresent();
     }
 
 }
