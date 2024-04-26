@@ -45,7 +45,7 @@ public class JwtAuthProvider implements AuthProvider {
     public boolean verifyToken(String token) {
 
         try {
-            jwtUtil.getClaims(token, secretKeyStr);
+            jwtUtil.verify(token, secretKeyStr);
             return true;
         } catch (Exception e) {
             return false;

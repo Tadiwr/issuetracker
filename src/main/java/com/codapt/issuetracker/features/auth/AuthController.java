@@ -3,12 +3,15 @@ package com.codapt.issuetracker.features.auth;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.codapt.issuetracker.shared.exceptions.UserAlreadyExistsException;
 import com.codapt.issuetracker.shared.exceptions.UserNotFoundException;
 import com.codapt.issuetracker.shared.types.AuthRepsonse;
 import com.codapt.issuetracker.shared.types.AuthRequest;
 import com.codapt.issuetracker.shared.types.CreateUserRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +28,7 @@ public class AuthController {
     public ResponseEntity<AuthRepsonse> login(@RequestBody AuthRequest req) {
 
         try {
+            System.err.println(req);
             AuthRepsonse res = authService.authenticate(req);
             return ResponseEntity.ok(res);
         } catch (UserNotFoundException e) {
@@ -35,7 +39,15 @@ public class AuthController {
 
     @PostMapping("/create/account")
     public ResponseEntity<AuthRepsonse> createAccount(@RequestBody CreateUserRequest req) {
-        AuthRepsonse res = authService.createNewUser(req);
+        AuthRepsonse res;
+
+        try {
+            res = authService.createNewUser(req);
+        } catch (UserAlreadyExistsException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
 
         return ResponseEntity.ok(res);
     }

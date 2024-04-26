@@ -18,4 +18,7 @@ public interface IssuesRepository extends CrudRepository<Issue, Long> {
 
     @Query("SELECT e FROM Issue e WHERE e.description LIKE %:description%")
     List<Issue> findLikeDescription(String description);
+
+    @Query("SELECT e FROM Issue e ORDER BY e.id DESC")
+    List<Issue> findAllDescending();
 }
