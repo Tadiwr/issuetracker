@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.codapt.issuetracker.features.users.User;
 import com.codapt.issuetracker.shared.enums.IssueStatus;
+import com.codapt.issuetracker.shared.exceptions.ResourceNotFound;
 import com.codapt.issuetracker.shared.types.AddIssueRequest;
 import com.codapt.issuetracker.shared.types.IssueDTO;
+import com.codapt.issuetracker.shared.types.UpdateIssueStatusRequest;
 
 import jakarta.transaction.Transactional;
 
@@ -74,6 +76,17 @@ public class IssueService {
         return issueRepo.findLikeDescription(description);
     }
 
+    public IssueDTO getIssueByIdDTO(Long id) throws ResourceNotFound {
+        Optional<Issue> issue = issueRepo.findById(id);
+
+         if (issue.isPresent()) {
+            return toDTO(issue.get());
+         }
+
+         throw new ResourceNotFound();
+         
+    }
+
     public Optional<Issue> getIssueById(Long id) {
         return issueRepo.findById(id);
     }
@@ -127,6 +140,16 @@ public class IssueService {
     
     public void makeIssueQueued(Long issueId) {
         changeIssueStatusTo(issueId, IssueStatus.QUEUED);
+    }
+
+    public void deleteIssue(Long issueId) {
+        issueRepo.deleteById(issueId);
+    }
+
+    public void changeIssueStatusTo(Long id, UpdateIssueStatusRequest body) {
+        IssueStatus status = body.getStatus();
+
+        changeIssueStatusTo(id, status);
     }
 
 }
